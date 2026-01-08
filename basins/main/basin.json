@@ -1,0 +1,9 @@
+{
+  "mode": "pulse",
+  "name": "main",
+  "outlets": {
+    "derived": "0.1.0"
+  },
+  "resolved": {},
+  "spec_version": 1
+}
