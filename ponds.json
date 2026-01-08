@@ -1,0 +1,4 @@
+{
+  "base": "basins/main/ponds/base",
+  "derived": "basins/main/ponds/derived"
+}

@@ -1,0 +1,14 @@
+[project]
+name = "duckstring-demo"
+version = "0.1.0"
+description = "Demo repo for duckstring Catchment/Basin/Pond pulse execution"
+requires-python = ">=3.10"
+dependencies = [
+  "duckdb>=0.10.0",
+  "ibis-framework[duckdb]>=9.0.0",
+  "pandas>=2.0.0",
+  "pyarrow>=14.0.0",
+]
+
+[tool.ruff]
+extend-exclude = ["catchment"]

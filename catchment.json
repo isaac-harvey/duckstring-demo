@@ -1,0 +1,22 @@
+{
+  "default_species": "local",
+  "modes": {
+    "pulse": {
+      "type": "pulse"
+    }
+  },
+  "pond_species": {},
+  "ponds": {
+    "base": "basins/main/ponds/base",
+    "derived": "basins/main/ponds/derived"
+  },
+  "root_dir": "catchment",
+  "spec_version": 1,
+  "species": {
+    "local": {
+      "engine": "duckdb",
+      "kind": "local",
+      "options": {}
+    }
+  }
+}
