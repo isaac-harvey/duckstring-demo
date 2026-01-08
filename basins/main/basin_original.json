@@ -1,0 +1,23 @@
+{
+  "mode": "pulse",
+  "name": "main",
+  "outlets": {
+    "derived": "0.1.0"
+  },
+  "resolved": {
+    "generated_by": "basins/main/hydrate.py",
+    "pond_paths": {
+      "base": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/base",
+      "derived": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/derived"
+    },
+    "pond_versions": {
+      "base": "0.1.0",
+      "derived": "0.1.0"
+    },
+    "ponds_topo": [
+      "base",
+      "derived"
+    ]
+  },
+  "spec_version": 1
+}

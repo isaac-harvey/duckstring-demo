@@ -1,23 +1,47 @@
 {
+  "ducks": {
+    "default": "shared",
+    "instances": {
+      "shared": {
+        "species": "local"
+      }
+    },
+    "ponds": {}
+  },
+  "hydrated": {
+    "ponds": {
+      "base": {
+        "dependencies": [],
+        "duck": "shared",
+        "major": 0,
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/base",
+        "run_if": "all_succeeded",
+        "version": "0.1.0"
+      },
+      "derived": {
+        "dependencies": [
+          "base"
+        ],
+        "duck": "shared",
+        "major": 0,
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/derived",
+        "run_if": "all_succeeded",
+        "version": "0.1.0"
+      }
+    },
+    "stages": [
+      [
+        "base"
+      ],
+      [
+        "derived"
+      ]
+    ]
+  },
   "mode": "pulse",
   "name": "main",
   "outlets": {
     "derived": "0.1.0"
-  },
-  "resolved": {
-    "generated_by": "basins/main/hydrate.py",
-    "pond_paths": {
-      "base": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/base",
-      "derived": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/derived"
-    },
-    "pond_versions": {
-      "base": "0.1.0",
-      "derived": "0.1.0"
-    },
-    "ponds_topo": [
-      "base",
-      "derived"
-    ]
   },
   "spec_version": 1
 }

@@ -12,8 +12,23 @@ def main() -> None:
         "spec_version": 1,
         "name": BASIN_DIR.name,
         "mode": "pulse",
+        # Only terminal ponds
         "outlets": {"derived": "0.1.0"},
-        "resolved": {},
+        # Duck instance selection is a Basin concern
+        "ducks": {
+            "instances": {
+                "shared": {
+                    "species": "local",
+                    # future: instance-level overrides (threads, memory, etc)
+                    # "options": {}
+                }
+            },
+            "default": "shared",
+            # optional per-pond overrides: {"base": "shared", "derived": "shared"}
+            "ponds": {},
+        },
+        # Populated by hydrate.py
+        "hydrated": {},
     }
 
     BASIN_JSON.write_text(json.dumps(spec, indent=2, sort_keys=True), encoding="utf-8")

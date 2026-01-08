@@ -11,7 +11,7 @@ PONDS_JSON = REPO_ROOT / "ponds.json"
 
 
 def main() -> None:
-    c = Catchment(root_dir="catchment")
+    c = Catchment(root_dir=".duckstring")
 
     # Load pond catalog (local paths in this demo; could be git URLs in future)
     c.load_ponds(PONDS_JSON)

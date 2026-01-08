@@ -10,7 +10,7 @@
     "base": "basins/main/ponds/base",
     "derived": "basins/main/ponds/derived"
   },
-  "root_dir": ".duckstring/catchment",
+  "root_dir": ".duckstring",
   "spec_version": 1,
   "species": {
     "local": {
