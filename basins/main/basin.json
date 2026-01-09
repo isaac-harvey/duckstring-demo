@@ -13,38 +13,51 @@
   },
   "hydrated": {
     "ponds": {
-      "base": {
-        "dependencies": [],
-        "duck": "shared",
-        "major": 0,
-        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/base/0.1.0",
-        "run_if": "all_succeeded",
-        "version": "0.1.0"
-      },
-      "derived": {
+      "aggregated": {
         "dependencies": [
-          "base"
+          "enriched"
         ],
         "duck": "shared",
         "major": 0,
-        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/derived/0.1.0",
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/aggregated/0.1.0",
+        "run_if": "all_succeeded",
+        "version": "0.1.0"
+      },
+      "enriched": {
+        "dependencies": [
+          "ingest"
+        ],
+        "duck": "shared",
+        "major": 0,
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/enriched/0.1.0",
+        "run_if": "all_succeeded",
+        "version": "0.1.0"
+      },
+      "ingest": {
+        "dependencies": [],
+        "duck": "shared",
+        "major": 0,
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/ingest/0.1.0",
         "run_if": "all_succeeded",
         "version": "0.1.0"
       }
     },
     "stages": [
       [
-        "base"
+        "ingest"
       ],
       [
-        "derived"
+        "enriched"
+      ],
+      [
+        "aggregated"
       ]
     ]
   },
   "mode": "pulse",
   "name": "main",
   "outlets": {
-    "derived": "0.1.0"
+    "aggregated": "0.1.0"
   },
   "spec_version": 1
 }

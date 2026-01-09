@@ -18,18 +18,19 @@ def main() -> None:
     catchment.load_ponds(PONDS_JSON)
 
     ## Option 2: From scratch, optionally overwriting existing ponds
-    catchment.set_ponds(
-        reference_type="local", # Can also be git, S3 etc.
-        version_by={
-            "type": "directory", # This is also the default
-            "template": "{pond}/{version}", # This indicates that within the folder for each pond, versions are subfolders named by version, and is the default
-        },
-        ponds={
-            "base": str(REPO_ROOT / "ponds" / "base"), # No version in pond name, so will use the version_by template to find versions (if template finds no versions, error is raised)
-            "derived@0.1.0": str(REPO_ROOT / "ponds" / "derived" / "0.1.0"), # Version in pond name, so will use that directly
-        },
-        overwrite=False
-    )
+    # catchment.set_ponds(
+    #     reference_type="local", # Can also be git, S3 etc.
+    #     version_by={
+    #         "type": "directory", # This is also the default
+    #         "template": "{pond}/{version}", # This indicates that within the folder for each pond, versions are subfolders named by version, and is the default
+    #     },
+    #     ponds={
+    #         "ingest@0.1.0": str(REPO_ROOT / "ponds" / "ingest" / "0.1.0"),
+    #         "enriched@0.1.0": str(REPO_ROOT / "ponds" / "enriched" / "0.1.0"),
+    #         "aggregated@0.1.0": str(REPO_ROOT / "ponds" / "aggregated" / "0.1.0"),
+    #     },
+    #     overwrite=False
+    # )
 
     # ### Example git-based ponds
     # catchment.set_ponds(
@@ -39,8 +40,8 @@ def main() -> None:
     #         "template": "release/{version}", # This indicates to use the version from the branch name
     #     },
     #     ponds={
-    #         "base": "https://path/to/repo/base.git",
-    #         "derived@0.1.0": "https://path/to/repo/derived.git@release/0.1.0", # Version in pond name, so will use that directly - must be able to resolve to a branch/commit or it will error
+    #         "ingest": "https://path/to/repo/ingest.git",
+    #         "enriched@0.1.0": "https://path/to/repo/enriched.git@release/0.1.0", # Version in pond name, so will use that directly - must be able to resolve to a branch/commit or it will error
     #     },
     #     overwrite=False
     # )

@@ -139,10 +139,47 @@ def _resolve_pond_dir(root_dir: Path, pond: str, prefix: tuple[int, ...] | None)
     raise FileNotFoundError(f"No versions found for {pond}@{'.'.join(map(str, prefix))}. Available: {avail}")
 
 
+def _sql_str(value: str) -> str:
+    return value.replace("'", "''")
+
+
+def _list_tables_with_stats(pond_dir: Path) -> None:
+    parquet_files = sorted(pond_dir.glob("*.parquet"))
+    if not parquet_files:
+        print("No tables found.")
+        return
+
+    con = duckdb.connect(database=":memory:")
+    try:
+        rows: list[tuple[str, int, int, int]] = []
+        for p in parquet_files:
+            sql_path = _sql_str(str(p))
+            n_rows = con.execute(
+                f"SELECT COUNT(*) FROM read_parquet('{sql_path}')"
+            ).fetchone()[0]
+            schema_rows = con.execute(
+                f"DESCRIBE SELECT * FROM read_parquet('{sql_path}')"
+            ).fetchall()
+            n_cols = len(schema_rows)
+            rows.append((p.stem, n_rows, n_cols, p.stat().st_size))
+
+        name_w = max(len(r[0]) for r in rows)
+        print("Tables:")
+        for name, n_rows, n_cols, size_bytes in rows:
+            size_mb = size_bytes / (1024 * 1024)
+            print(
+                f"  - {name:<{name_w}}  rows={n_rows:<10} cols={n_cols:<4} size={size_mb:6.2f} MB"
+            )
+    finally:
+        con.close()
+
+
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Inspect a catchment parquet table: pond[@verprefix] table")
+    ap = argparse.ArgumentParser(
+        description="Inspect a catchment parquet table: pond[@verprefix] [table]"
+    )
     ap.add_argument("pond", help="Pond ref: base, base@0, base@0.1, or base@0.1.0")
-    ap.add_argument("table", help="Table name like pulse")
+    ap.add_argument("table", nargs="?", help="Table name (omit to list available tables)")
     ap.add_argument("--limit", type=int, default=20, help="Number of rows to show (default: 20)")
     ap.add_argument("--no-head", action="store_true", help="Do not print row preview")
     args = ap.parse_args()
@@ -152,8 +189,8 @@ def main() -> None:
 
     try:
         pond, prefix = SemVer.parse_prefix(args.pond)
-        table = args.table.strip()
-        if not table:
+        table = args.table.strip() if args.table else None
+        if table is not None and not table:
             raise ValueError("Table must be non-empty.")
     except ValueError as e:
         print(f"Error: {e}", file=sys.stderr)
@@ -164,6 +201,14 @@ def main() -> None:
     except FileNotFoundError as e:
         print(str(e), file=sys.stderr)
         sys.exit(1)
+
+    if table is None:
+        label = f"{pond}@{resolved_version}" if resolved_version != "<unversioned>" else pond
+        print(f"Catchment root: {root_dir}")
+        print(f"Pond: {label}")
+        print(f"Data dir: {pond_dir}")
+        _list_tables_with_stats(pond_dir)
+        return
 
     parquet_path = pond_dir / f"{table}.parquet"
     if not parquet_path.exists():

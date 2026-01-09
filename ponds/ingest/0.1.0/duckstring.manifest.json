@@ -1,0 +1,43 @@
+{
+  "name": "ingest",
+  "version": "0.1.0",
+  "description": "Ingest NYC Taxi trips (Jan 2023) from a public parquet source.",
+  "sources": {},
+  "stages": [
+    {
+      "index": 0,
+      "parallelizable": true,
+      "outputs": [
+        "trips_raw"
+      ],
+      "notes": null
+    }
+  ],
+  "exported_tables": {
+    "trips_raw": {
+      "name": "trips_raw",
+      "schema": {
+        "vendor_id": "int64",
+        "pickup_at": "timestamp",
+        "dropoff_at": "timestamp",
+        "passenger_count": "int64",
+        "trip_distance": "float64",
+        "rate_code_id": "int64",
+        "pickup_location_id": "int64",
+        "dropoff_location_id": "int64",
+        "payment_type": "int64",
+        "fare_amount": "float64",
+        "extra": "float64",
+        "mta_tax": "float64",
+        "tip_amount": "float64",
+        "tolls_amount": "float64",
+        "improvement_surcharge": "float64",
+        "total_amount": "float64",
+        "congestion_surcharge": "float64",
+        "airport_fee": "float64"
+      },
+      "description": "Raw NYC Taxi trip rows (Jan 2023)."
+    }
+  },
+  "private_tables": {}
+}

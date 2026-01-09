@@ -22,7 +22,7 @@ def main() -> None:
 
     ## Option 1: Derived from Catchment
     basin = catchment.basin(name=BASIN_DIR.name)
-    
+
     ## Option 2: Created from scratch
     # basin = Basin(name=BASIN_DIR.name)
     # basin.set_catchment(catchment)
@@ -31,7 +31,7 @@ def main() -> None:
     ## Outlets
     ## - This validates that the outlets exist in the attached catchment
     ## - Defaults to empty dict (no outlets) if not set
-    basin.set_outlets({"derived": "0.1.0"})
+    basin.set_outlets({"aggregated": "0.1.0"})
 
     ## Ducks
     ### Instances

@@ -3,6 +3,12 @@ duckstring-demo
 
 A runnable demo repo for duckstring's v1 local Catchment/Basin/Pond + pulse execution.
 
+This version uses a three-layer pond stack:
+
+- ingest: reads NYC Taxi Trips (Jan 2023) from a public parquet URL
+- enriched: adds derived fields like duration and speed
+- aggregated: daily summary metrics
+
 Quick start
 -----------
 
@@ -15,28 +21,21 @@ Quick start
 
 2) (Optional) regenerate specs (JSONs are included already):
 
-    python create_catchment.py
-    python basins/main/create_basin.py
+    python create_catchment_.py
+    python basins/main/create_basin_.py
 
-3) Hydrate basin (build DAG metadata into basin.json):
+3) Hydrate basin (copies pond code into .duckstring/ponds/):
 
-    python basins/main/hydrate.py
+    python basins/main/hydrate_.py
 
 4) Pulse:
 
-    python basins/main/pulse.py
+    python basins/main/pulse_.py
 
 Outputs
 -------
 
-- catchment/state/duckstring.duckdb
-- catchment/data/base/pulse.parquet
-- catchment/data/derived/pulse_stats.parquet
-- catchment/state/demo_pulses.sqlite  (persistent pulse log backing base.pulse)
-
-Notes
------
-
-This demo implements "append" semantics for base.pulse by persisting pulse timestamps to SQLite
-and rebuilding the full history into DuckDB on each run. This is a deliberate workaround for
-duckstring v1's "replace materialization" behavior; later versions can make this native.
+- .duckstring/state/duckstring.duckdb
+- .duckstring/data/ingest@0.1.0/trips_raw.parquet
+- .duckstring/data/enriched@0.1.0/trips_enriched.parquet
+- .duckstring/data/aggregated@0.1.0/trip_daily_summary.parquet
