@@ -55,7 +55,7 @@
     ]
   },
   "mode": "pulse",
-  "name": "main",
+  "name": "base",
   "outlets": {
     "aggregated": "0.1.0"
   },

@@ -55,7 +55,7 @@
     ]
   },
   "mode": "pulse",
-  "name": "updated",
+  "name": "minor",
   "outlets": {
     "aggregated": "0.2.0"
   },
