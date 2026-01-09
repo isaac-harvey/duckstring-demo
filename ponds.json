@@ -6,7 +6,10 @@
         "enriched@0.1.0": "ponds/enriched/0.1.0",
         "aggregated@0.1.0": "ponds/aggregated/0.1.0",
         "enriched@0.2.0": "ponds/enriched/0.2.0",
-        "aggregated@0.2.0": "ponds/aggregated/0.2.0"
+        "aggregated@0.2.0": "ponds/aggregated/0.2.0",
+        "enriched@2.0.0": "ponds/enriched/2.0.0",
+        "aggregated@0.3.0": "ponds/aggregated/0.3.0",
+        "aggregated@1.0.0": "ponds/aggregated/1.0.0"
       }
     }
   ]

@@ -9,11 +9,14 @@
   "ponds": {
     "aggregated": {
       "0.1.0": "ponds/aggregated/0.1.0",
-      "0.2.0": "ponds/aggregated/0.2.0"
+      "0.2.0": "ponds/aggregated/0.2.0",
+      "0.3.0": "ponds/aggregated/0.3.0",
+      "1.0.0": "ponds/aggregated/1.0.0"
     },
     "enriched": {
       "0.1.0": "ponds/enriched/0.1.0",
-      "0.2.0": "ponds/enriched/0.2.0"
+      "0.2.0": "ponds/enriched/0.2.0",
+      "2.0.0": "ponds/enriched/2.0.0"
     },
     "ingest": {
       "0.1.0": "ponds/ingest/0.1.0"
