@@ -1,4 +1,7 @@
 {
+  "catchment": {
+    "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/catchment.json"
+  },
   "ducks": {
     "default": "shared",
     "instances": {
@@ -14,7 +17,7 @@
         "dependencies": [],
         "duck": "shared",
         "major": 0,
-        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/base",
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/base/0.1.0",
         "run_if": "all_succeeded",
         "version": "0.1.0"
       },
@@ -24,7 +27,7 @@
         ],
         "duck": "shared",
         "major": 0,
-        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/basins/main/ponds/derived",
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/derived/0.1.0",
         "run_if": "all_succeeded",
         "version": "0.1.0"
       }

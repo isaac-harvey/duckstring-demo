@@ -11,21 +11,51 @@ PONDS_JSON = REPO_ROOT / "ponds.json"
 
 
 def main() -> None:
-    c = Catchment(root_dir=".duckstring")
+    catchment = Catchment(root_dir=".duckstring")
 
-    # Load pond catalog (local paths in this demo; could be git URLs in future)
-    c.load_ponds(PONDS_JSON)
+    # Ponds
+    ## Option 1: From local file
+    catchment.load_ponds(PONDS_JSON)
 
-    # Register compute species (v1: local duckdb only)
-    c.set_species(
+    ## Option 2: From scratch, optionally overwriting existing ponds
+    catchment.set_ponds(
+        reference_type="local", # Can also be git, S3 etc.
+        version_by={
+            "type": "directory", # This is also the default
+            "template": "{pond}/{version}", # This indicates that within the folder for each pond, versions are subfolders named by version, and is the default
+        },
+        ponds={
+            "base": str(REPO_ROOT / "ponds" / "base"), # No version in pond name, so will use the version_by template to find versions (if template finds no versions, error is raised)
+            "derived@0.1.0": str(REPO_ROOT / "ponds" / "derived" / "0.1.0"), # Version in pond name, so will use that directly
+        },
+        overwrite=False
+    )
+
+    # ### Example git-based ponds
+    # catchment.set_ponds(
+    #     reference_type="git",
+    #     version_by={
+    #         "type": "branch", # Can be tag too
+    #         "template": "release/{version}", # This indicates to use the version from the branch name
+    #     },
+    #     ponds={
+    #         "base": "https://path/to/repo/base.git",
+    #         "derived@0.1.0": "https://path/to/repo/derived.git@release/0.1.0", # Version in pond name, so will use that directly - must be able to resolve to a branch/commit or it will error
+    #     },
+    #     overwrite=False
+    # )
+
+    # Duck Species
+    catchment.set_species(
         {
             "local": Species(kind="local", engine="duckdb"),
         },
         overwrite=False,
     )
-    c.set_default_species("local")
+    catchment.set_default_species("local")
 
-    c.save(CATCHMENT_JSON)
+    # Save catchment spec
+    catchment.save(CATCHMENT_JSON)
     print(f"Wrote {CATCHMENT_JSON}")
 
 

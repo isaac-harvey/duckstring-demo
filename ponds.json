@@ -1,4 +1,10 @@
 {
-  "base": "basins/main/ponds/base",
-  "derived": "basins/main/ponds/derived"
+  "data": [
+    {
+      "ponds": {
+        "base@0.1.0": "ponds/base/0.1.0",
+        "derived@0.1.0": "ponds/derived/0.1.0"
+      }
+    }
+  ]
 }
