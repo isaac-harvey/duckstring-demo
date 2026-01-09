@@ -1,0 +1,35 @@
+{
+  "name": "aggregated",
+  "version": "0.2.0",
+  "description": "Daily aggregates of enriched NYC Taxi trips.",
+  "sources": {
+    "enriched": "0.2.0"
+  },
+  "stages": [
+    {
+      "index": 0,
+      "parallelizable": true,
+      "outputs": [
+        "trip_daily_summary"
+      ],
+      "notes": null
+    }
+  ],
+  "exported_tables": {
+    "trip_daily_summary": {
+      "name": "trip_daily_summary",
+      "schema": {
+        "trip_date": "date",
+        "trips": "int64",
+        "total_passengers": "int64",
+        "avg_distance": "float64",
+        "total_fare": "float64",
+        "avg_fare": "float64",
+        "avg_speed_mph": "float64",
+        "avg_fare_per_mile": "float64"
+      },
+      "description": "Daily summary metrics for NYC Taxi trips."
+    }
+  },
+  "private_tables": {}
+}

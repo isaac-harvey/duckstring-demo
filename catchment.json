@@ -8,10 +8,12 @@
   "pond_species": {},
   "ponds": {
     "aggregated": {
-      "0.1.0": "ponds/aggregated/0.1.0"
+      "0.1.0": "ponds/aggregated/0.1.0",
+      "0.2.0": "ponds/aggregated/0.2.0"
     },
     "enriched": {
-      "0.1.0": "ponds/enriched/0.1.0"
+      "0.1.0": "ponds/enriched/0.1.0",
+      "0.2.0": "ponds/enriched/0.2.0"
     },
     "ingest": {
       "0.1.0": "ponds/ingest/0.1.0"

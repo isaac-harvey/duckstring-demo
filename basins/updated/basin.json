@@ -1,0 +1,63 @@
+{
+  "catchment": {
+    "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/catchment.json"
+  },
+  "ducks": {
+    "default": "shared",
+    "instances": {
+      "shared": {
+        "species": "local"
+      }
+    },
+    "ponds": {}
+  },
+  "hydrated": {
+    "ponds": {
+      "aggregated": {
+        "dependencies": [
+          "enriched"
+        ],
+        "duck": "shared",
+        "major": 0,
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/aggregated/0.2.0",
+        "run_if": "all_succeeded",
+        "version": "0.2.0"
+      },
+      "enriched": {
+        "dependencies": [
+          "ingest"
+        ],
+        "duck": "shared",
+        "major": 0,
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/enriched/0.2.0",
+        "run_if": "all_succeeded",
+        "version": "0.2.0"
+      },
+      "ingest": {
+        "dependencies": [],
+        "duck": "shared",
+        "major": 0,
+        "path": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring/ponds/ingest/0.1.0",
+        "run_if": "all_succeeded",
+        "version": "0.1.0"
+      }
+    },
+    "stages": [
+      [
+        "ingest"
+      ],
+      [
+        "enriched"
+      ],
+      [
+        "aggregated"
+      ]
+    ]
+  },
+  "mode": "pulse",
+  "name": "updated",
+  "outlets": {
+    "aggregated": "0.2.0"
+  },
+  "spec_version": 1
+}
