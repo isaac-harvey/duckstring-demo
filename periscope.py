@@ -12,6 +12,7 @@ import duckdb
 
 
 _VERSION_DIR_RE = re.compile(r"^(?P<pond>[A-Za-z0-9_\-]+)@(?P<maj>\d+)\.(?P<min>\d+)\.(?P<pat>\d+)$")
+_SEMVER_DIR_RE = re.compile(r"^(?P<maj>\d+)\.(?P<min>\d+)\.(?P<pat>\d+)$")
 
 
 @dataclass(frozen=True, order=True)
@@ -76,16 +77,29 @@ def _list_version_dirs(data_dir: Path, pond: str) -> list[tuple[SemVer, Path]]:
     if not data_dir.exists():
         return out
 
+    versions: dict[SemVer, Path] = {}
+
+    pond_dir = data_dir / pond
+    if pond_dir.exists():
+        for p in pond_dir.iterdir():
+            if not p.is_dir():
+                continue
+            m = _SEMVER_DIR_RE.match(p.name)
+            if not m:
+                continue
+            v = SemVer(int(m.group("maj")), int(m.group("min")), int(m.group("pat")))
+            versions[v] = p
+
     for p in data_dir.iterdir():
         if not p.is_dir():
             continue
         m = _VERSION_DIR_RE.match(p.name)
-        if not m:
-            continue
-        if m.group("pond") != pond:
+        if not m or m.group("pond") != pond:
             continue
         v = SemVer(int(m.group("maj")), int(m.group("min")), int(m.group("pat")))
-        out.append((v, p))
+        versions.setdefault(v, p)
+
+    out = [(v, d) for v, d in versions.items()]
     out.sort(key=lambda t: t[0])
     return out
 
@@ -123,9 +137,12 @@ def _resolve_pond_dir(root_dir: Path, pond: str, prefix: tuple[int, ...] | None)
     # exact: require it exists
     if len(prefix) == 3:
         want = SemVer(prefix[0], prefix[1], prefix[2])
-        want_dir = data_dir / f"{pond}@{want.major}.{want.minor}.{want.patch}"
+        want_dir = data_dir / pond / f"{want.major}.{want.minor}.{want.patch}"
         if want_dir.exists():
             return want_dir, f"{want.major}.{want.minor}.{want.patch}"
+        legacy_dir = data_dir / f"{pond}@{want.major}.{want.minor}.{want.patch}"
+        if legacy_dir.exists():
+            return legacy_dir, f"{want.major}.{want.minor}.{want.patch}"
         raise FileNotFoundError(f"Missing directory: {want_dir}")
 
     # prefix: choose max match

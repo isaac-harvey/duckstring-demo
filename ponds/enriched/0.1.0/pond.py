@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import ibis
 
-from duckstring import Pond
+from duckstring import Pond, Snapshot
 
 
 POND_VERSION = "0.1.0"
+SNAPSHOT_JSON = "snapshot.json"
 
 
-def pond(resolver=None) -> Pond:
+def pond() -> Pond:
     """
     Demo pond: enriched
 
@@ -20,8 +21,6 @@ def pond(resolver=None) -> Pond:
         version=POND_VERSION,
     )
     p.source({"ingest": "0.1.0"})
-    if resolver is not None:
-        p.attach_resolver(resolver)
 
     trips = p.upstream["ingest"].get(
         "trips_raw",
@@ -65,5 +64,29 @@ def pond(resolver=None) -> Pond:
     )
 
     p.sink({"trips_enriched": out}, description="NYC Taxi trips with derived metrics.")
-    p.flow([None])
     return p
+
+
+def run() -> None:
+    """
+    Run the pond to materialize its outputs.
+    """
+    # Load active snapshot
+    snap = Snapshot.load_active(SNAPSHOT_JSON)
+
+    # Run against the snapshot
+    # Ducks can be selected from the species specified against the snapshot's sink
+    # The default is an instance of the default species
+    # in_place (default True) modifies the sinks directly, while False creates a copy before modifying - useful for verifying incremental logic
+    snap.flow(in_place=False)
+
+    # Alternatively if a specific duck species needs to be used:
+    # snap.flow(duck="local", in_place=False)
+
+    # Optionally do something with the output tables
+    out = snap.get("trips_enriched")
+    print(out)
+
+
+if __name__ == "__main__":
+    run()

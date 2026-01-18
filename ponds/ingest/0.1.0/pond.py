@@ -2,14 +2,15 @@ from __future__ import annotations
 
 import ibis
 
-from duckstring import Pond
+from duckstring import Pond, Snapshot
 
 
 POND_VERSION = "0.1.0"
+SNAPSHOT_JSON = "snapshot.json"
 SOURCE_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
 
 
-def pond(resolver=None) -> Pond:
+def pond() -> Pond:
     """
     Demo pond: ingest
 
@@ -20,8 +21,6 @@ def pond(resolver=None) -> Pond:
         description="Ingest NYC Taxi trips (Jan 2023) from a public parquet source.",
         version=POND_VERSION,
     )
-    if resolver is not None:
-        p.attach_resolver(resolver)
 
     trips = ibis.read_parquet(SOURCE_URL)
 
@@ -47,5 +46,29 @@ def pond(resolver=None) -> Pond:
     )
 
     p.sink({"trips_raw": out}, description="Raw NYC Taxi trip rows (Jan 2023).")
-    p.flow([None])
     return p
+
+
+def run() -> None:
+    """
+    Run the pond to materialize its outputs.
+    """
+    # Load active snapshot
+    snap = Snapshot.load_active(SNAPSHOT_JSON)
+
+    # Run against the snapshot
+    # Ducks can be selected from the species specified against the snapshot's sink
+    # The default is an instance of the default species
+    # in_place (default True) modifies the sinks directly, while False creates a copy before modifying - useful for verifying incremental logic
+    snap.flow(in_place=False)
+
+    # Alternatively if a specific duck species needs to be used:
+    # snap.flow(duck="local", in_place=False)
+
+    # Optionally do something with the output tables
+    out = snap.get("trips_raw")
+    print(out)
+
+
+if __name__ == "__main__":
+    run()
