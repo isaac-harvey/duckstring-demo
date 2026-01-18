@@ -3,8 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 from duckstring import Catchment, Snapshot
-from .pond import pond
 
+from pond import pond
 
 SNAPSHOT_JSON = "snapshot.json"
 

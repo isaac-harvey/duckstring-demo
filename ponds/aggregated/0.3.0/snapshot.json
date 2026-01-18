@@ -1,0 +1,20 @@
+{
+  "active": "small",
+  "snapshots": {
+    "small": {
+      "description": "Small subset of source data for quick development and testing.",
+      "materialized_at": "2026-01-18T15:57:54+1100",
+      "name": "small",
+      "pond": {
+        "name": "aggregated",
+        "version": "0.3.0"
+      },
+      "sink_catchment": {
+        "root_dir": ".duckstring/small"
+      },
+      "source_catchment": {
+        "root_dir": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring"
+      }
+    }
+  }
+}

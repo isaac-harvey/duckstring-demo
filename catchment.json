@@ -22,7 +22,7 @@
       "0.1.0": "ponds/ingest/0.1.0"
     }
   },
-  "root_dir": ".duckstring",
+  "root_dir": "/Users/isaac.harvey/code/isaac-harvey/public/duckstring-demo/.duckstring",
   "spec_version": 1,
   "species": {
     "local": {

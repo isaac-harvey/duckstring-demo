@@ -3,8 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 from duckstring import Catchment, Snapshot
-from .pond import pond
 
+from pond import pond
 
 SNAPSHOT_JSON = "snapshot.json"
 
@@ -41,7 +41,7 @@ def snapshot() -> Snapshot:
     snap.sink(trips)
 
     trip_daily_summary = snap.downstream.get("trip_daily_summary")
-    trip_daily_summary = trip_daily_summary.filter(trip_daily_summary.ds_pulse <= 12)
+    # trip_daily_summary = trip_daily_summary.filter(trip_daily_summary.ds_pulse <= 12)
     snap.sink(trip_daily_summary)
 
     return snap
